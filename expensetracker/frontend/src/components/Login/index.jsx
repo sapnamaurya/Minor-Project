@@ -1,170 +1,124 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Dropdown from "react-bootstrap/Dropdown";
-import axios from "axios";
-import "./style.css";
-import image from "../../assests/Images/login backgroun.jpeg";
-const Login = () => {
-  const [userData, setUserData] = useState({ email: "", password: "" });
-  const handleUsername = (e) => {
-    setUserData({ ...userData, email: e.target.value });
-  };
-  const handlePassword = (e) => {
-    setUserData({ ...userData, password: e.target.value });
-  };
-  const [showPassword, setShowPassword] = useState(false);
-  const [btnSignShow, setBtnSignShow] = useState(false);
-  const handleSignBtn = () => {
-    setBtnSignShow(true);
-  };
-  const handleSignButton = () => {
-    setShowPassword(true);
-  };
-  const handleLogin = async () => {
-    // navigate("/");
+import "./style.css"; // Ensure you have your styling here
+import { useNavigate } from "react-router-dom"; // Use useNavigate to navigate
 
-    try {
-      // setIsLoader(true);
-      const api = "https://dummyjson.com/auth/login";
-      const response = await axios.post(api, {
-        username: "emilys",
-        password: "emilyspass",
-      });
-      const { data = {} } = response || {};
-      if (response?.status === 200) {
-        localStorage.setItem("userData", JSON.stringify(data));
-        window.location.reload();
-        // setIsLoader(false);
-      }
-    } catch (error) {
-      console.error(" facing the problem in api", error);
-      // setIsLoader(false);
+const Login = () => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isLoader, setIsLoader] = useState(false); // State for handling loader
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
+  const navigate = useNavigate(); // Initialize the useNavigate hook
+
+  // Get saved user data from localStorage
+  const savedUserData = JSON.parse(localStorage.getItem("userData") || []);
+
+  // Check if saved user data exists
+  // useEffect(() => {
+  //   if (!savedUserData) {
+  //     setErrorMessage("No user found. Please sign up first!");
+  //   }
+  // }, [savedUserData]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoader(true); // Show loader while validating login
+
+    // If no saved user data exists in localStorage, show error
+    if (!savedUserData) {
+      setErrorMessage("No user found. Please sign up first!");
+      setIsLoader(false);
+      return;
     }
+
+    // Validate login credentials
+    if (
+      formData.email === savedUserData.email &&
+      formData.password === savedUserData.password
+    ) {
+      setErrorMessage(""); // Clear any previous error message
+
+      // After successful login, navigate to home page
+      console.log("Login successful!");
+      navigate("/"); // Redirect to home page (make sure the route is defined)
+    } else {
+      setErrorMessage("Invalid credentials. Please try again.");
+    }
+
+    setIsLoader(false); // Stop loader after checking credentials
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
     <>
-      <div id="background-image-login">
-        <div id="image-part-section">
-          <div className="image-man">welcome Back</div>
-          <div className="login-sec">
-            <div className="main-container">
-              <div className="head-parent">
-                <h1 className="head">Login in</h1>
-              </div>
-              <div className="email-section">
-                <Form>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label id="mob-label">
-                      Email or mobile phone number
-                    </Form.Label>
-                    <Form.Control
-                      className="input-email"
-                      type="email"
-                      placeholder="enter your email"
-                      name="email"
-                      value={userData?.email}
-                      onChange={(e) => handleUsername(e)}
-                      onClick={handleSignBtn}
-                    />
-                  </Form.Group>
-                </Form>
-                {btnSignShow
-                  ? userData?.email.length < 6 && (
-                      <p className="valid-section">
-                        Please Enter valid
-                        {userData?.email.length < 6 && " Email"}
-                      </p>
-                    )
-                  : null}
-              </div>
-              <div className="password">
-                <Form>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <div className="pass-parent">
-                      <Form.Label id="pass-label">Password</Form.Label>
-                      {/* <a id="forget2" onClick={handleForget}> */}
-                      Forget Password
-                      {/* </a> */}
-                    </div>
-                    <Form.Control
-                      className="input-password"
-                      type="password"
-                      placeholder=" Enter a password"
-                      name="password"
-                      value={userData?.password}
-                      onChange={(e) => handlePassword(e)}
-                      onClick={handleSignButton}
-                    />
-                  </Form.Group>
-                </Form>
+      <div className="login-container">
+        <div className="login-section">
+          <h3 className="login-title">Expense Tracker Login</h3>
 
-                {showPassword
-                  ? userData?.email.length < 6 && (
-                      <p className="valid-section">
-                        Please Enter valid
-                        {userData?.email.length < 6 && " password"}
-                      </p>
-                    )
-                  : null}
+          <Form onSubmit={handleSubmit}>
+            {/* Email Input */}
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            {/* Password Input */}
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            {/* Error Message */}
+            {errorMessage && (
+              <div className="error-message">
+                <p>{errorMessage}</p>
               </div>
-              <div className="btn-container">
-                <Button
-                  variant="warning"
-                  type="button"
-                  className="sign-btn"
-                  onClick={handleLogin}
-                  disabled={
-                    userData?.email.length < 6 || userData?.password.length < 6
-                  }
-                >
-                  Sign in
-                </Button>
-              </div>
-              {/* {isLoader && <Loader />} */}
-              <div className="text">
-                <p className="set-text">
-                  By continuing, you agree to Amazon's
-                  <span className="conditions"> Conditions of Use</span> and
-                  <span className="conditions"> Privacy Notice.</span>
-                </p>
-              </div>
-              <div className="check-box">
-                <div className="box1">
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check
-                      className="box-set"
-                      type="checkbox"
-                      label="Keep me signed in."
-                    />
-                  </Form.Group>
-                </div>
-                <div className="dropdown">
-                  <Dropdown as={ButtonGroup}>
-                    <Button variant="link" disabled id="detail">
-                      Details
-                    </Button>
-                  </Dropdown>
-                </div>
-              </div>
-              <div className="line">
-                <hr className="hr1" />
-                <p className="para1">New to Amazon?</p>
-                <hr className="hr2" />
-              </div>
-              <div className="btn2-container">
-                <Button className="create-btn">
-                  Create your Amazon account
-                </Button>
-              </div>
+            )}
+
+            <Button
+              variant="primary"
+              type="submit"
+              className="login-btn"
+              disabled={isLoader}
+            >
+              Login
+            </Button>
+            {/* Login Button */}
+
+            {/* Loader */}
+            {isLoader && <div className="loader">Loading...</div>}
+
+            {/* Register New Account */}
+            <div className="register-link">
+              <p>
+                New to Expense Tracker?{" "}
+                <a href="/register">Create an account</a>
+              </p>
             </div>
-          </div>
+          </Form>
         </div>
       </div>
-      <div id="footer-part"></div>
     </>
   );
 };
+
 export default Login;
