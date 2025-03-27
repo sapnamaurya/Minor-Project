@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import Header from "../Header";
 import Form from "react-bootstrap/Form";
 import "./style.css"; // Ensure you have your styling here
-import { useNavigate } from "react-router-dom"; // Use useNavigate to navigate
+import { useLocation, useNavigate, useParams } from "react-router-dom"; // Use useNavigate to navigate
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoader, setIsLoader] = useState(false); // State for handling loader
   const [errorMessage, setErrorMessage] = useState(""); // Error message state
   const navigate = useNavigate(); // Initialize the useNavigate hook
+  const params = useParams();
+  const loc = useLocation();
+
+  console.log(params, loc);
 
   // Get saved user data from localStorage
   const savedUserData = JSON.parse(localStorage.getItem("userData") || []);
@@ -58,6 +63,7 @@ const Login = () => {
 
   return (
     <>
+      <Header />
       <div className="login-container">
         <div className="login-section">
           <h3 className="login-title">Expense Tracker Login</h3>
@@ -94,14 +100,14 @@ const Login = () => {
               </div>
             )}
 
-            <Button
+            <button
               variant="primary"
               type="submit"
               className="login-btn"
               disabled={isLoader}
             >
               Login
-            </Button>
+            </button>
             {/* Login Button */}
 
             {/* Loader */}

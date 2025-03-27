@@ -1,5 +1,12 @@
 /* General styling */
 body {
+}
+
+/* Main container for the sign-up page */
+.main-sign-up {
+  display: flex;
+  justify-content: end;
+  align-items: center;
   font-family: "Arial", sans-serif;
   background-color: #f4f4f9;
   background-image: url("https://thumbs.dreamstime.com/b/registration-onlin…nternet-business-technology-concept-104512007.jpg");
@@ -8,21 +15,14 @@ body {
   margin: 0;
 
   padding: 0;
-}
-
-/* Main container for the sign-up page */
-.main-sign-up {
-  right: 10%;
-  position: relative;
-  display: flex;
-  justify-content: end;
-  align-items: center;
   height: 100vh;
 }
 
 /* Sign-up form container */
 .signUp-container {
   background-color: #fbf8f8;
+  right: 10%;
+  position: relative;
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

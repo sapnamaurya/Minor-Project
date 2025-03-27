@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 89vh;
+  /* height: 100vh; */
   background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg");
   background-size: cover;
   background-position: center;
@@ -23,7 +24,11 @@
 }
 
 .login-btn {
+  /* color: white;
+  position: relative; */
   width: 100%;
+  /* left: 0;
+  background: #0d6efd; */
 }
 
 .error-message {
