@@ -17,7 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path="/Main" element={<MainHeader />} />
+        {/* <Route path="/Main" element={<MainHeader />} /> */}
         <Route path="/Expense" element={<ExpenseNotes />} />
 
         {/* <Route path="/Expense" element={<ExpensePage />} /> */}

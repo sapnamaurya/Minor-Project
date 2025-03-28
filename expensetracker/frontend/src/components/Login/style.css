@@ -24,11 +24,9 @@
 }
 
 .login-btn {
-  /* color: white;
-  position: relative; */
   width: 100%;
-  /* left: 0;
-  background: #0d6efd; */
+  margin-left: 4%;
+  width: 100% !important;
 }
 
 .error-message {

@@ -7,12 +7,27 @@
 .btn {
   position: relative;
   width: 7%;
-  right: 4%;
+  right: 0%;
   margin-top: 0%;
   color: black !important;
   background-color: white !important;
 }
 .btn:hover {
+  background-color: green !important;
+  color: white !important;
+}
+.backgound {
+  background-color: #87d6f5;
+}
+.logout {
+  position: relative;
+  width: 7%;
+  right: 1%;
+  margin-top: 0%;
+  color: black !important;
+  background-color: white !important;
+}
+.logout:hover {
   background-color: green !important;
   color: white !important;
 }
@@ -25,7 +40,8 @@
   font-size: 18px;
   display: flex;
   width: 34%;
-  margin-left: 13%;
+  /* margin-left: 13%; */
+  margin-right: 38% !important;
   max-height: 100px;
   justify-content: space-evenly;
 }
@@ -34,4 +50,10 @@
 }
 .navbar {
   margin: 0 !important;
+}
+.username {
+  margin-top: -8px;
+  /* top: 14%; */
+  position: relative;
+  right: 33%;
 }

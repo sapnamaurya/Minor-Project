@@ -7,11 +7,21 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useLocation, useNavigate } from "react-router";
 import "./style.css";
+import { useState } from "react";
 // import Home from "../Home";
 
 const MainHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("userData"))
+  );
+  const { name = [], image = [] } = user || {};
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+    setUser();
+  };
   const handleLogin = () => {
     navigate("/login");
   };
@@ -49,7 +59,7 @@ const MainHeader = () => {
                 Help
               </Nav.Link>
             </Nav>
-            {location.pathname !== "/login" && (
+            {!user?.email && location.pathname !== "/login" && (
               <Button
                 variant="outline-success"
                 className="btn"
@@ -57,6 +67,15 @@ const MainHeader = () => {
               >
                 Login
               </Button>
+            )}
+            <div className="user-cont">
+              <img className="user-img" src={image} />
+              <p className="username">{name}</p>
+            </div>
+            {user?.email && (
+              <button className="logout" onClick={handleLogout}>
+                Logout
+              </button>
             )}
           </Navbar.Collapse>
         </Container>

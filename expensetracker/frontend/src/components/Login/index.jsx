@@ -15,22 +15,21 @@ const Login = () => {
 
   console.log(params, loc);
 
-  // Get saved user data from localStorage
-  const savedUserData = JSON.parse(localStorage.getItem("userData") || []);
-
-  // Check if saved user data exists
-  // useEffect(() => {
-  //   if (!savedUserData) {
-  //     setErrorMessage("No user found. Please sign up first!");
-  //   }
-  // }, [savedUserData]);
+  // Get saved user data from localStorage safely
+  let parsedUserData = null;
+  try {
+    const savedUserData = localStorage.getItem("userData");
+    parsedUserData = savedUserData ? JSON.parse(savedUserData) : null;
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoader(true); // Show loader while validating login
 
     // If no saved user data exists in localStorage, show error
-    if (!savedUserData) {
+    if (!parsedUserData) {
       setErrorMessage("No user found. Please sign up first!");
       setIsLoader(false);
       return;
@@ -38,14 +37,14 @@ const Login = () => {
 
     // Validate login credentials
     if (
-      formData.email === savedUserData.email &&
-      formData.password === savedUserData.password
+      formData.email === parsedUserData.email &&
+      formData.password === parsedUserData.password
     ) {
       setErrorMessage(""); // Clear any previous error message
 
       // After successful login, navigate to home page
       console.log("Login successful!");
-      navigate("/Main"); // Redirect to home page (make sure the route is defined)
+      navigate("/mainpage"); // Redirect to home page (make sure the route is defined)
     } else {
       setErrorMessage("Invalid credentials. Please try again.");
     }
@@ -100,15 +99,15 @@ const Login = () => {
               </div>
             )}
 
-            <button
+            {/* Login Button */}
+            <Button
               variant="primary"
               type="submit"
               className="login-btn"
               disabled={isLoader}
             >
               Login
-            </button>
-            {/* Login Button */}
+            </Button>
 
             {/* Loader */}
             {isLoader && <div className="loader">Loading...</div>}
