@@ -1,8 +1,13 @@
 import React from "react";
 import "./style.css";
+import { useNavigate } from "react-router";
 // import bg_img from "../../assests/Images/black-mamba.png";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const handleExplore = () => {
+    navigate("/Expense");
+  };
   return (
     <>
       <div className="main">
@@ -39,7 +44,9 @@ const Home = () => {
             </ul>
           </div>
 
-          <button className="cta-btn">Explore Here</button>
+          <button className="cta-btn" onClick={handleExplore}>
+            Explore Here
+          </button>
         </div>
       </div>
     </>

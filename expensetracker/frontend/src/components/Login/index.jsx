@@ -45,7 +45,7 @@ const Login = () => {
 
       // After successful login, navigate to home page
       console.log("Login successful!");
-      navigate("/"); // Redirect to home page (make sure the route is defined)
+      navigate("/Mainheader"); // Redirect to home page (make sure the route is defined)
     } else {
       setErrorMessage("Invalid credentials. Please try again.");
     }

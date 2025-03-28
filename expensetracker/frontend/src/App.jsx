@@ -5,14 +5,17 @@ import Home from "./components/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Register from "./components/Register";
 import HomePage from "./pages/HomePage";
+import MainHeader from "./components/MainHeader";
+import ExpenseNotes from "./components/ExpenseNotes";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/Mainheader" element={<MainHeader />} />
+        <Route path="/Expense" element={<ExpenseNotes />} />
       </Routes>
     </BrowserRouter>
   );
