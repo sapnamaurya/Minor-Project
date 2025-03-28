@@ -10,6 +10,11 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: auto;
   -moz-osx-font-smoothing: grayscale;
 }
 

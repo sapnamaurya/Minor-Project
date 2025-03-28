@@ -7,6 +7,8 @@ import Register from "./components/Register";
 import HomePage from "./pages/HomePage";
 import MainHeader from "./components/MainHeader";
 import ExpenseNotes from "./components/ExpenseNotes";
+import ExpensePage from "./pages/ExpensePage";
+import MainPage from "./pages/MainPage";
 function App() {
   return (
     <BrowserRouter>
@@ -14,8 +16,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/Mainheader" element={<MainHeader />} />
+        <Route path="/mainpage" element={<MainPage />} />
+        <Route path="/Main" element={<MainHeader />} />
         <Route path="/Expense" element={<ExpenseNotes />} />
+
+        {/* <Route path="/Expense" element={<ExpensePage />} /> */}
       </Routes>
     </BrowserRouter>
   );

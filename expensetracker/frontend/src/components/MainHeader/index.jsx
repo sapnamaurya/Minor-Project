@@ -7,13 +7,16 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useLocation, useNavigate } from "react-router";
 import "./style.css";
-import Home from "../Home";
+// import Home from "../Home";
 
 const MainHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const handleLogin = () => {
     navigate("/login");
+  };
+  const handleHome = () => {
+    navigate("/mainpage");
   };
   return (
     <>
@@ -29,7 +32,7 @@ const MainHeader = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="#action1" className="links">
+              <Nav.Link className="links" onClick={handleHome}>
                 Home
               </Nav.Link>
               <Nav.Link href="#action2" className="links">
@@ -58,7 +61,7 @@ const MainHeader = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Home />
+      {/* <Home /> */}
     </>
   );
 };
