@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
 import { useNavigate } from "react-router-dom"; // Corrected for useNavigate
-// import BasicFooter from "../../components/BasicFooter";
+import MainHeader from "../MainHeader/index.jsx";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -56,91 +56,94 @@ const Register = () => {
   };
 
   return (
-    <div className="main-sign-up">
-      <div className="signUp-container">
-        <h1>Create an account</h1>
-        <form onSubmit={handleSubmit}>
-          {/* Name Input */}
-          <label>
-            <b>Your name</b>
-          </label>
-          <input
-            className="padding-sec"
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="First and last name"
-            required
-          />
+    <>
+      <MainHeader />
+      <div className="main-sign-up">
+        <div className="signUp-container">
+          <h1>Create an account</h1>
+          <form onSubmit={handleSubmit}>
+            {/* Name Input */}
+            <label>
+              <b>Your name</b>
+            </label>
+            <input
+              className="padding-sec"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="First and last name"
+              required
+            />
 
-          {/* Email Input */}
-          <label>
-            <b>Mobile number or Email</b>
-          </label>
-          <input
-            className="padding-sec"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            placeholder="Enter your email"
-          />
+            {/* Email Input */}
+            <label>
+              <b>Mobile number or Email</b>
+            </label>
+            <input
+              className="padding-sec"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Enter your email"
+            />
 
-          {/* Password Input */}
-          <label>
-            <b>Password</b>
-          </label>
-          <input
-            className="padding-sec"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="At least 6 characters"
-            required
-          />
+            {/* Password Input */}
+            <label>
+              <b>Password</b>
+            </label>
+            <input
+              className="padding-sec"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="At least 6 characters"
+              required
+            />
 
-          {/* Confirm Password Input */}
-          <label>
-            <b>Re-enter password</b>
-          </label>
-          <input
-            className="padding-sec"
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            placeholder="Re-enter password"
-          />
+            {/* Confirm Password Input */}
+            <label>
+              <b>Re-enter password</b>
+            </label>
+            <input
+              className="padding-sec"
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              placeholder="Re-enter password"
+            />
 
-          {/* Password Info */}
-          <p className="password-info">
-            Passwords must be at least 6 characters.
+            {/* Password Info */}
+            <p className="password-info">
+              Passwords must be at least 6 characters.
+            </p>
+
+            {/* Display Error Message */}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+            {/* Loader */}
+            {isLoader && <div className="loader">Loading...</div>}
+
+            <button type="submit">Create your account</button>
+          </form>
+
+          {/* Link to Login */}
+          <p className="login-link">
+            Already have an account?{" "}
+            <span onClick={() => navigate("/login")} id="sign-color">
+              Login
+            </span>
           </p>
+        </div>
 
-          {/* Display Error Message */}
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-          {/* Loader */}
-          {isLoader && <div className="loader">Loading...</div>}
-
-          <button type="submit">Create your account</button>
-        </form>
-
-        {/* Link to Login */}
-        <p className="login-link">
-          Already have an account?{" "}
-          <span onClick={() => navigate("/login")} id="sign-color">
-            Login
-          </span>
-        </p>
+        <div className="sign-footer">{/* <BasicFooter /> */}</div>
       </div>
-
-      <div className="sign-footer">{/* <BasicFooter /> */}</div>
-    </div>
+    </>
   );
 };
 

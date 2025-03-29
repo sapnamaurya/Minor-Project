@@ -1,13 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
-import Home from "./components/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Register from "./components/Register";
 import HomePage from "./pages/HomePage";
-import MainHeader from "./components/MainHeader";
 import ExpenseNotes from "./components/ExpenseNotes";
-import ExpensePage from "./pages/ExpensePage";
 import MainPage from "./pages/MainPage";
 function App() {
   return (

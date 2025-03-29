@@ -1,7 +1,6 @@
 import React from "react";
 import "./style.css";
 import { useNavigate } from "react-router";
-// import bg_img from "../../assests/Images/black-mamba.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,20 +10,6 @@ const Home = () => {
   return (
     <>
       <div className="main">
-        {/* <div className="main-cont">
-          <h1 style={{ textAlign: "center" }}>Welcome To</h1>
-          <h1 style={{ textAlign: "center" }} className="app-name">
-            ExpensoMeter
-          </h1>
-          <p className="title">A safe place to keep your expense record.</p>
-          <h5>Let's dive into the following wonderful features:</h5>
-          <ul>
-            <li> Categorize your expenses.</li>
-            <li>Differentiate by dates.</li>
-            <li>Perform mathematical operations on expenses.</li>
-          </ul>
-        </div> */}
-
         <div className="hero">
           <h1>
             Welcome to <span>ExpensoMeter</span>

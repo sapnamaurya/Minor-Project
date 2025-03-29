@@ -5,12 +5,13 @@ body {
 /* Main container for the sign-up page */
 .main-sign-up {
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
   font-family: "Arial", sans-serif;
   background-color: #f4f4f9;
-  background-image: url("https://thumbs.dreamstime.com/b/registration-onlin…nternet-business-technology-concept-104512007.jpg");
   background-size: cover;
+  background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg");
+
   background-position: center;
   margin: 0;
 
@@ -21,7 +22,7 @@ body {
 /* Sign-up form container */
 .signUp-container {
   background-color: #fbf8f8;
-  right: 10%;
+  /* right: 10%; */
   position: relative;
   border-radius: 8px;
   padding: 30px;
