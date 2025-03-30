@@ -18,6 +18,7 @@ const MainHeader = () => {
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
+    navigate("/");
     setUser();
   };
   const handleLogin = () => {
@@ -25,6 +26,9 @@ const MainHeader = () => {
   };
   const handleHome = () => {
     navigate("/mainpage");
+  };
+  const handlexpense = () => {
+    navigate("/expense");
   };
   return (
     <>
@@ -43,12 +47,16 @@ const MainHeader = () => {
               <Nav.Link className="links" onClick={handleHome}>
                 Home
               </Nav.Link>
-              <Nav.Link href="#action2" className="links">
-                Personal
+              <Nav.Link
+                href="#action2"
+                className="links"
+                onClick={handlexpense}
+              >
+                Expenses
               </Nav.Link>
 
               <Nav.Link href="#" className="links">
-                Business
+                Analysis
               </Nav.Link>
               <Nav.Link href="#" className="links">
                 About
@@ -78,7 +86,6 @@ const MainHeader = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* <Home /> */}
     </>
   );
 };

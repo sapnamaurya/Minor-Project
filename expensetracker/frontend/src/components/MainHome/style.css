@@ -1,0 +1,82 @@
+.main {
+  /* background-image: url("https://www.transparenttextures.com/patterns/black-mamba.png");
+    
+    */
+  height: 100vh;
+  /* height: 100vh; */
+  background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg");
+  background-size: cover;
+  background-position: center;
+  font-weight: bold;
+  background-color: #fafafa;
+  /* background-image: url("https://www.transparenttextures.com/patterns/black-mamba.png"); */
+  /* background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg"); */
+
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+.main-cont {
+  /* width: 30%;
+    margin: auto; */
+  left: 37%;
+  position: absolute;
+  top: 29%;
+}
+.title {
+  margin-top: 6%;
+}
+ul {
+  margin-top: 3%;
+  line-height: 3;
+}
+.app-name {
+  color: #57007b;
+}
+/* General styles */
+
+/* Navbar */
+
+/* Login Button */
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  margin-top: 150px;
+  color: black;
+  left: 32%;
+  position: absolute;
+  top: 7%;
+}
+
+.hero h1 {
+  font-size: 50px;
+}
+
+.hero h1 span {
+  color: #57007b;
+}
+
+.hero p {
+  font-size: 18px;
+  text-align: center;
+}
+
+.features {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.cta-btn {
+  background: #57007b;
+  color: white;
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cta-btn:hover {
+  background: #3d005b;
+}

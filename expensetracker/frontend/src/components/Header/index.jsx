@@ -29,11 +29,11 @@ const Header = () => {
               Home
             </Nav.Link>
             <Nav.Link href="#action2" disabled className="links">
-              Personal
+              Expenses
             </Nav.Link>
 
             <Nav.Link href="#" disabled className="links">
-              Business
+              Analysis
             </Nav.Link>
             <Nav.Link href="#" disabled className="links">
               About

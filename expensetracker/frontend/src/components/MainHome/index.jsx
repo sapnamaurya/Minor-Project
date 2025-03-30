@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import { useNavigate } from "react-router";
 
-const Home = () => {
+const MainHome = () => {
   const navigate = useNavigate();
   const handleExplore = () => {
     navigate("/Expense");
@@ -29,7 +29,7 @@ const Home = () => {
             </ul>
           </div>
 
-          <button className="cta-btn" onClick={handleExplore} disabled>
+          <button className="cta-btn" onClick={handleExplore}>
             Explore Here
           </button>
         </div>
@@ -38,4 +38,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MainHome;

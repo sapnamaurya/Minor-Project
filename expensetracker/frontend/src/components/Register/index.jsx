@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
 import { useNavigate } from "react-router-dom"; // Corrected for useNavigate
-import MainHeader from "../MainHeader/index.jsx";
+import Header from "../Header/index.jsx";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const Register = () => {
 
   return (
     <>
-      <MainHeader />
+      <Header />
       <div className="main-sign-up">
         <div className="signUp-container">
           <h1>Create an account</h1>

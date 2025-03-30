@@ -1,12 +1,12 @@
 import React from "react";
 import MainHeader from "../../components/MainHeader";
-import Home from "../../components/Home";
+import MainHome from "../../components/MainHome";
 
 const MainPage = () => {
   return (
     <div>
       <MainHeader />
-      <Home />
+      <MainHome />
     </div>
   );
 };
