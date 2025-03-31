@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import { useNavigate } from "react-router-dom"; // Corrected for useNavigate
 import Header from "../Header/index.jsx";
+import Footer from "../Footer/Footer.jsx";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -143,6 +144,7 @@ const Register = () => {
 
         <div className="sign-footer">{/* <BasicFooter /> */}</div>
       </div>
+      <Footer />
     </>
   );
 };

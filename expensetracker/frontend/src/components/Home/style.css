@@ -1,18 +1,10 @@
 .main {
-  /* background-image: url("https://www.transparenttextures.com/patterns/black-mamba.png");
-  
-  */
-  height: 100vh;
-  /* height: 100vh; */
   background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg");
   background-size: cover;
   background-position: center;
   font-weight: bold;
+  height: 85vh;
   background-color: #fafafa;
-  /* background-image: url("https://www.transparenttextures.com/patterns/black-mamba.png"); */
-  /* background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg"); */
-
-  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 .main-cont {
   /* width: 30%;
@@ -31,13 +23,7 @@ ul {
 .app-name {
   color: #57007b;
 }
-/* General styles */
 
-/* Navbar */
-
-/* Login Button */
-
-/* Hero Section */
 .hero {
   text-align: center;
   margin-top: 150px;

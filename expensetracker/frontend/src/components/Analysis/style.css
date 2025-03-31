@@ -1,23 +1,6 @@
-.analysis-container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.chart-container {
-  margin: 20px 0;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #f9f9f9;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  color: #333;
-}
-
-h3 {
-  color: #555;
+.analysis-cont {
+  height: 100vh;
+  background-image: url("https://wallpapershome.com/images/pages/pic_h/25956.jpg");
+  background-size: cover;
+  background-position: center;
 }

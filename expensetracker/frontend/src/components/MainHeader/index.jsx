@@ -30,6 +30,10 @@ const MainHeader = () => {
   const handlexpense = () => {
     navigate("/expense");
   };
+  const handleAnalysis = () => {
+    navigate("/analysis");
+  };
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary navbar">
@@ -55,7 +59,7 @@ const MainHeader = () => {
                 Expenses
               </Nav.Link>
 
-              <Nav.Link href="#" className="links">
+              <Nav.Link href="#" className="links" onClick={handleAnalysis}>
                 Analysis
               </Nav.Link>
               <Nav.Link href="#" className="links">

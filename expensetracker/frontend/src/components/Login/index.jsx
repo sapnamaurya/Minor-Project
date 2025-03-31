@@ -4,6 +4,7 @@ import Header from "../Header";
 import Form from "react-bootstrap/Form";
 import "./style.css"; // Ensure you have your styling here
 import { useLocation, useNavigate, useParams } from "react-router-dom"; // Use useNavigate to navigate
+import Footer from "../Footer/Footer";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -122,6 +123,7 @@ const Login = () => {
           </Form>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
