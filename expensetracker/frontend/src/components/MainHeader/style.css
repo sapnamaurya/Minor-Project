@@ -50,6 +50,7 @@
 }
 .navbar {
   margin: 0 !important;
+  padding: 0;
 }
 .username {
   margin-top: -8px;
