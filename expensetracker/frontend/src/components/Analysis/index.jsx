@@ -23,7 +23,7 @@ const Analysis = () => {
             fontFamily: "'Lato', sans-serif" // Apply Lato font here
           }}
         >
-          Expense Tracker - Analysis
+          ExpensoMeter - Analysis Report
         </h2>
 
         {/* Display loading message while data is being fetched */}
