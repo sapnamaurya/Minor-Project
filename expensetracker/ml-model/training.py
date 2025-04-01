@@ -11,7 +11,7 @@ OUTPUT_PATH = "../frontend/public/output.txt"
 BAR_CHART_PATH = "../frontend/public/bar_chart.png"
 PIE_CHART_PATH = "../frontend/public/pie_chart.png"
 
-# Load the dataset
+# Load dataset
 df = pd.read_csv("expense_data.csv", parse_dates=["Date"])
 
 # Encode categorical data
@@ -28,23 +28,27 @@ with open(OUTPUT_PATH, "w") as f:
     f.write("Expense Clustering Analysis\n")
     f.write("==========================\n\n")
     f.write(df[["Category", "Amount", "Cluster"]].to_string(index=False))
-    f.write("\n\n Analysis Complete! Data saved to output.txt")
+    f.write("\n\nAnalysis Complete! Data saved to output.txt")
 
-# Save bar chart
-plt.figure(figsize=(8, 6))
+# Save bar chart with a lighter or transparent background
+plt.figure(figsize=(6, 5))
 df.groupby("Category")['Amount'].sum().plot(kind='bar', colormap='viridis')
 plt.title("Total Expenses by Category")
 plt.xlabel("Category")
 plt.ylabel("Total Amount Spent")
 plt.xticks(rotation=45)
-plt.savefig(BAR_CHART_PATH)
+plt.gcf().patch.set_facecolor('none')  # Set background to be transparent (or adjust opacity here)
+plt.tight_layout()
+plt.savefig(BAR_CHART_PATH, transparent=True)  # Save with transparent background
 
-# Save pie chart
-plt.figure(figsize=(8, 6))
+# Save pie chart with a lighter or transparent background
+plt.figure(figsize=(6, 5))
 df.groupby("Category")['Amount'].sum().plot(kind='pie', autopct='%1.1f%%', colormap='viridis')
 plt.title("Expense Distribution by Category")
 plt.ylabel("")  # Hide y-label
-plt.savefig(PIE_CHART_PATH)  # Save pie chart as a separate file
+plt.gcf().patch.set_facecolor('none')  # Set background to be transparent (or adjust opacity here)
+plt.tight_layout()
+plt.savefig(PIE_CHART_PATH, transparent=True)  # Save with transparent background
 
 print(f"Output saved at: {OUTPUT_PATH}")
 print(f"Bar chart saved at: {BAR_CHART_PATH}")

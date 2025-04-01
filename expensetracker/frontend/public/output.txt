@@ -503,4 +503,4 @@ Entertainment  316.13        2
     Education  223.86        2
        Health  258.81        2
 
- Analysis Complete! Data saved to output.txt
+Analysis Complete! Data saved to output.txt
