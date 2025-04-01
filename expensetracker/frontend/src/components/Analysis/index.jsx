@@ -14,8 +14,15 @@ const Analysis = () => {
     <>
       <MainHeader />
       <div className="analysis-cont" style={{ textAlign: "center", marginTop: "40px" }}>
-        {/* Center align the heading */}
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "30px" }}>
+        {/* Center align the heading with Lato font */}
+        <h2 
+          style={{
+            fontSize: "2rem",
+            fontWeight: "bold",
+            marginBottom: "30px",
+            fontFamily: "'Lato', sans-serif" // Apply Lato font here
+          }}
+        >
           Expense Tracker - Analysis
         </h2>
 
