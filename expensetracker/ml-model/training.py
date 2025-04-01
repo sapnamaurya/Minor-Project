@@ -4,38 +4,48 @@ import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import LabelEncoder
 from sklearn.decomposition import PCA
+import os
+
+# Define paths
+OUTPUT_PATH = "../frontend/public/output.txt"
+BAR_CHART_PATH = "../frontend/public/bar_chart.png"
+PIE_CHART_PATH = "../frontend/public/pie_chart.png"
 
 # Load the dataset
 df = pd.read_csv("expense_data.csv", parse_dates=["Date"])
 
 # Encode categorical data
-le_category = LabelEncoder()
-df["Category_encoded"] = le_category.fit_transform(df["Category"])
-le_payment = LabelEncoder()
-df["Payment_encoded"] = le_payment.fit_transform(df["Payment Method"])
+df["Category_encoded"] = df["Category"].astype("category").cat.codes
+df["Payment_encoded"] = df["Payment Method"].astype("category").cat.codes
 
-# Clustering expenses using K-Means (including multiple features)
+# Clustering with KMeans
 X = df[["Amount", "Category_encoded", "Payment_encoded"]]
 kmeans = KMeans(n_clusters=3, random_state=42)
-df['Cluster'] = kmeans.fit_predict(X)
+df["Cluster"] = kmeans.fit_predict(X)
 
-# Applying PCA for dimensionality reduction
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X)
-df['PCA1'], df['PCA2'] = X_pca[:, 0], X_pca[:, 1]
+# Save analysis results to output.txt
+with open(OUTPUT_PATH, "w") as f:
+    f.write("Expense Clustering Analysis\n")
+    f.write("==========================\n\n")
+    f.write(df[["Category", "Amount", "Cluster"]].to_string(index=False))
+    f.write("\n\n Analysis Complete! Data saved to output.txt")
 
-# Bar chart for total expenses by category
+# Save bar chart
 plt.figure(figsize=(8, 6))
 df.groupby("Category")['Amount'].sum().plot(kind='bar', colormap='viridis')
 plt.title("Total Expenses by Category")
 plt.xlabel("Category")
 plt.ylabel("Total Amount Spent")
 plt.xticks(rotation=45)
-plt.show()
+plt.savefig(BAR_CHART_PATH)
 
-# Pie chart for expense distribution by category
+# Save pie chart
 plt.figure(figsize=(8, 6))
 df.groupby("Category")['Amount'].sum().plot(kind='pie', autopct='%1.1f%%', colormap='viridis')
 plt.title("Expense Distribution by Category")
-plt.ylabel("")  # Remove y-axis label for clarity
-plt.show()
+plt.ylabel("")  # Hide y-label
+plt.savefig(PIE_CHART_PATH)  # Save pie chart as a separate file
+
+print(f"Output saved at: {OUTPUT_PATH}")
+print(f"Bar chart saved at: {BAR_CHART_PATH}")
+print(f"Pie chart saved at: {PIE_CHART_PATH}")
