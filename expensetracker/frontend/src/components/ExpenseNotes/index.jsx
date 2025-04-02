@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
 import MainHeader from "../MainHeader";
+import Footer from "../Footer/Footer";
 
 const ExpenseEntry = () => {
   const [date, setDate] = useState("");
@@ -118,6 +119,7 @@ const ExpenseEntry = () => {
           <p className="no-expense-text">No expenses added yet.</p>
         )}
       </div>
+      <Footer />
     </>
   );
 };

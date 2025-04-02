@@ -66,7 +66,7 @@ const Login = () => {
       <Header />
       <div className="login-container">
         <div className="login-section">
-          <h3 className="login-title">Expense Tracker Login</h3>
+          <h3 className="login-title">ExpensoMeter Login</h3>
 
           <Form onSubmit={handleSubmit}>
             {/* Email Input */}
@@ -116,7 +116,7 @@ const Login = () => {
             {/* Register New Account */}
             <div className="register-link">
               <p>
-                New to Expense Tracker?{" "}
+                New to ExpensoMeter?{" "}
                 <a href="/register">Create an account</a>
               </p>
             </div>

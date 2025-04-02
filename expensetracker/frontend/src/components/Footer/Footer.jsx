@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="main-footer">
       <p className="text-sm">
-        &copy; {new Date().getFullYear()} Expense Tracker. All rights reserved.
+        &copy; {new Date().getFullYear()} ExpensoMeter. All rights reserved.
       </p>
       <p className="text-xs">
         Made with <span className="text-red-500">❤ </span> by &nbsp;
