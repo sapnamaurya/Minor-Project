@@ -12,7 +12,7 @@ const Home = () => {
       <div className="main">
         <div className="hero">
           <h1>
-            Welcome to <span>ExpensoMeter</span>
+            Welcome to <span class="glow">ExpensoMeter</span>
           </h1>
 
           <p style={{ marginTop: "5%" }}>
