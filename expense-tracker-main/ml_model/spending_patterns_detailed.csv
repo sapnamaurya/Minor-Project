@@ -1,0 +1,41 @@
+Customer ID,Category,Item,Quantity,Price Per Unit,Total Spent,Payment Method,Location,Transaction Date,Currency
+CUST_0001,Groceries,Milk,2,250,500,Debit Card,In-store,2025-02-01,INR
+CUST_0002,Groceries,Vegetables,3,400,1200,Credit Card,Online,2025-02-02,INR
+CUST_0003,Housing and Utilities,Electricity Bill,1,4000,4000,Cash,In-store,2025-02-03,INR
+CUST_0004,Transportation,Public Transit,1,300,300,Digital Wallet,Mobile App,2025-02-04,INR
+CUST_0005,Food,Restaurant Meal,1,1500,1500,Debit Card,Online,2025-02-05,INR
+CUST_0006,Groceries,Chicken,2,1000,2000,Credit Card,In-store,2025-02-06,INR
+CUST_0007,Housing and Utilities,Water Bill,1,2000,2000,Cash,Online,2025-02-07,INR
+CUST_0008,Transportation,Gas,1,3000,3000,Digital Wallet,Mobile App,2025-02-08,INR
+CUST_0009,Shopping,Clothes,1,2500,2500,Debit Card,Online,2025-02-09,INR
+CUST_0010,Fitness,Yoga Class,2,750,1500,Credit Card,In-store,2025-02-10,INR
+CUST_0001,Groceries,Milk,1,250,250,Debit Card,In-store,2025-03-01,INR
+CUST_0002,Groceries,Vegetables,4,500,2000,Credit Card,Online,2025-03-02,INR
+CUST_0003,Housing and Utilities,Electricity Bill,1,4500,4500,Cash,In-store,2025-03-03,INR
+CUST_0004,Transportation,Public Transit,1,350,350,Digital Wallet,Mobile App,2025-03-04,INR
+CUST_0005,Food,Restaurant Meal,1,2000,2000,Debit Card,Online,2025-03-05,INR
+CUST_0006,Groceries,Chicken,3,900,2700,Credit Card,In-store,2025-03-06,INR
+CUST_0007,Housing and Utilities,Water Bill,1,1500,1500,Cash,Online,2025-03-07,INR
+CUST_0008,Transportation,Gas,1,3500,3500,Digital Wallet,Mobile App,2025-03-08,INR
+CUST_0009,Shopping,Clothes,1,2000,2000,Debit Card,Online,2025-03-09,INR
+CUST_0010,Fitness,Yoga Class,2,1000,2000,Credit Card,In-store,2025-03-10,INR
+CUST_0001,Groceries,Milk,2,300,600,Debit Card,In-store,2025-04-01,INR
+CUST_0002,Groceries,Vegetables,3,450,1350,Credit Card,Online,2025-04-02,INR
+CUST_0003,Housing and Utilities,Electricity Bill,1,4000,4000,Cash,In-store,2025-04-03,INR
+CUST_0004,Transportation,Public Transit,1,400,400,Digital Wallet,Mobile App,2025-04-04,INR
+CUST_0005,Food,Restaurant Meal,1,1800,1800,Debit Card,Online,2025-04-05,INR
+CUST_0006,Groceries,Chicken,2,1100,2200,Credit Card,In-store,2025-04-06,INR
+CUST_0007,Housing and Utilities,Water Bill,1,2000,2000,Cash,Online,2025-04-07,INR
+CUST_0008,Transportation,Gas,1,3200,3200,Digital Wallet,Mobile App,2025-04-08,INR
+CUST_0009,Shopping,Clothes,1,2500,2500,Debit Card,Online,2025-04-09,INR
+CUST_0010,Fitness,Yoga Class,2,800,1600,Credit Card,In-store,2025-04-10,INR
+CUST_0001,Groceries,Milk,1,300,300,Debit Card,In-store,2025-05-01,INR
+CUST_0002,Groceries,Vegetables,3,500,1500,Credit Card,Online,2025-05-02,INR
+CUST_0003,Housing and Utilities,Electricity Bill,1,4500,4500,Cash,In-store,2025-05-03,INR
+CUST_0004,Transportation,Public Transit,1,350,350,Digital Wallet,Mobile App,2025-05-04,INR
+CUST_0005,Food,Restaurant Meal,1,2000,2000,Debit Card,Online,2025-05-05,INR
+CUST_0006,Groceries,Chicken,2,1000,2000,Credit Card,In-store,2025-05-06,INR
+CUST_0007,Housing and Utilities,Water Bill,1,1500,1500,Cash,Online,2025-05-07,INR
+CUST_0008,Transportation,Gas,1,3500,3500,Digital Wallet,Mobile App,2025-05-08,INR
+CUST_0009,Shopping,Clothes,1,2000,2000,Debit Card,Online,2025-05-09,INR
+CUST_0010,Fitness,Yoga Class,2,1000,2000,Credit Card,In-store,2025-05-10,INR
