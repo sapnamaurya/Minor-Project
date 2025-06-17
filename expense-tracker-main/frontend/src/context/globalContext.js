@@ -242,17 +242,15 @@ export const GlobalProvider = ({ children }) => {
 
   const editIncome = async (id, updatedIncome) => {
     try {
-      const token = localStorage.getItem("token"); // Get token from localStorage
-
+      const token = localStorage.getItem("token");
       await axios.put(`${BASE_URL}/incomes/${id}`, updatedIncome, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      getExpenses();
+      getIncomes(); // ✅ Correct this line
     } catch (err) {
-      setError("Failed to update personal expense");
+      setError("Failed to update personal income"); // ✅ Also fix error message
     }
   };
 

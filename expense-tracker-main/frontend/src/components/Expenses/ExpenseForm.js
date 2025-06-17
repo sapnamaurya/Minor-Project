@@ -28,7 +28,14 @@ function ExpenseForm({ expense }) {
   const { amount, date, category_id, description } = inputState;
 
   const handleInput = (name) => (e) => {
-    setInputState({ ...inputState, [name]: e.target.value });
+    const value =
+      name === "amount" ? parseInt(e.target.value) || 0 : e.target.value;
+
+    setInputState({
+      ...inputState,
+      [name]: value,
+    });
+
     setError("");
   };
 

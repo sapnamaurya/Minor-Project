@@ -28,11 +28,11 @@ ChartJs.register(
 );
 
 function Chart() {
-  const { incomes, expenses } = useGlobalContext();
+  const { businessIncomes, businessExpenses } = useGlobalContext();
 
-  console.log(incomes, expenses);
+  console.log(businessIncomes, businessExpenses);
   const data = {
-    labels: incomes.map((inc) => {
+    labels: businessIncomes.map((inc) => {
       const { date } = inc;
       return dateFormat(date);
     }),
@@ -40,7 +40,7 @@ function Chart() {
       {
         label: "Income",
         data: [
-          ...incomes.map((income) => {
+          ...businessIncomes.map((income) => {
             const { amount } = income;
             const amt = parseInt(amount);
             return amt;
@@ -50,9 +50,9 @@ function Chart() {
         tension: 0.2,
       },
       {
-        label: "Expenses",
+        label: "businessExpenses",
         data: [
-          ...expenses.map((expense) => {
+          ...businessExpenses.map((expense) => {
             const { amount } = expense;
             const amt = parseInt(amount);
             return amt;

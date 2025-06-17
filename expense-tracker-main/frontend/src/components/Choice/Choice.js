@@ -8,7 +8,7 @@ const ChoicePage = () => {
 
   const handleSubmit = () => {
     if (choice === "business" || choice === "personal") {
-      localStorage.setItem("accountType", choice); // Save selected choice
+      localStorage.setItem("accountType", choice);
       navigate("/register");
     } else {
       alert("Please select an option.");

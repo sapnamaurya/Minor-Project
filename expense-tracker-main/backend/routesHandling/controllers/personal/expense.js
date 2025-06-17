@@ -178,6 +178,7 @@ export const checkUserTotalLimit = async (req, res) => {
       return res.status(404).json({ message: "User not found." });
     }
 
+    console.log(userResult.rows[0]);
     const monthlyLimit = parseFloat(userResult.rows[0].monthlylimit);
 
     // Step 2: Sum all expenses for that user

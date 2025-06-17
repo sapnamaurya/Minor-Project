@@ -4,7 +4,8 @@ import { useGlobalContext } from "../../context/globalContext";
 import History from "../../History/History";
 import { InnerLayout } from "../../styles/Layouts";
 import { dollar } from "../../utils/Icons";
-import Chart from "../../components/Chart/Chart";
+import Chart from "../Business/chart";
+import { ExpenseChecker } from "../../components/notification";
 
 function Dashboard() {
   const {
@@ -22,11 +23,10 @@ function Dashboard() {
     getBusinessExpenses();
   }, []);
 
-  console.log(totalBusinessBalance, totalBusinessExpenses, totalBusinessIncome);
-
   return (
     <DashboardStyled>
       <InnerLayout>
+        <ExpenseChecker />
         <h1>All Transactions</h1>
         <div className="stats-con">
           <div className="chart-con">

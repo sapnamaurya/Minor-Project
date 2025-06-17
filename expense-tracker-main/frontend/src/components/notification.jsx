@@ -17,9 +17,13 @@ export const ExpenseChecker = () => {
             },
           }
         );
+        console.log("res--", res, res.data.alert);
+        const updatedAlertmsg = res.data.alert.includes("of 0!")
+          ? res.data.alert.replace("0!", "1000!")
+          : res?.data?.alert;
 
-        if (res.data.alert) {
-          toast.warn(res.data.alert, {
+        if (updatedAlertmsg) {
+          toast.warn(updatedAlertmsg, {
             position: "top-right",
             autoClose: 8000,
           });
