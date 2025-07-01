@@ -1,8 +1,7 @@
-import { Pool } from 'pg'; 
-import dotenv from 'dotenv'; 
+import { Pool } from "pg";
+import dotenv from "dotenv";
 
 dotenv.config();
-
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -10,17 +9,17 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
- ssl: {
-  rejectUnauthorized: false,
-}
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 const connectDb = async () => {
   try {
     await pool.connect();
-    console.log('PostgreSQL Connected');
+    console.log("PostgreSQL Connected");
   } catch (error) {
-    console.error('PostgreSQL Connection Error:', error);
+    console.error("PostgreSQL Connection Error:", error);
   }
 };
 
