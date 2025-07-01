@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { BASE_URL } from "../../context/globalContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -14,13 +15,10 @@ const Login = () => {
     setIsLoader(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/auth/login",
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/auth/login`, {
+        email: formData.email,
+        password: formData.password,
+      });
 
       const { token, user } = response.data;
       localStorage.setItem("token", token);

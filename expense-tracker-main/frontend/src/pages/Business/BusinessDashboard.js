@@ -53,7 +53,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="history-con">
-            <History />
+            {/* <History /> */}
             <h2 className="salary-title">
               Min <span>Salary</span>Max
             </h2>

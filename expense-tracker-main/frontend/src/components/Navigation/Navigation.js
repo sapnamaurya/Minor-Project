@@ -16,7 +16,7 @@ function Navigation({ active, setActive }) {
       <div className="user-con">
         <img src={logo} alt="dc" />
         <div className="text">
-          <h2>{currentUser?.username || "Guest"}</h2>
+          <h2 className="username">{currentUser?.username || "Guest"}</h2>
         </div>
       </div>
       <ul className="menu-items">
@@ -83,6 +83,7 @@ const NavStyled = styled.nav`
       padding: 0.2rem;
       box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
     }
+
     h2 {
       color: rgba(34, 34, 96, 1);
     }
