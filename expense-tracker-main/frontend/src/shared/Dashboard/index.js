@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { saveAs } from "file-saver";
+import Papa from "papaparse";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const Dash = () => {
   const [expenses, setExpenses] = useState([
@@ -44,7 +48,8 @@ const Dash = () => {
 
   // Add expense
   const handleAddExpense = () => {
-    if (!newExpense.member || !newExpense.category || !newExpense.amount) return;
+    if (!newExpense.member || !newExpense.category || !newExpense.amount)
+      return;
     setExpenses([
       ...expenses,
       {
@@ -81,6 +86,27 @@ const Dash = () => {
     setEditExpense({ member: "", category: "", amount: "" });
   };
 
+  // Export to CSV
+  const handleExportCSV = () => {
+    const csv = Papa.unparse(expenses);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "expenses.csv");
+  };
+
+  // Export to PDF
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Expense Report", 14, 10);
+
+    autoTable(doc, {
+      startY: 20,
+      head: [["Member", "Category", "Amount"]],
+      body: expenses.map((exp) => [exp.member, exp.category, exp.amount]),
+    });
+
+    doc.save("expenses.pdf");
+  };
+
   return (
     <DashboardStyled>
       {/* Team Budget Overview */}
@@ -110,21 +136,30 @@ const Dash = () => {
                       type="text"
                       value={editExpense.member}
                       onChange={(ev) =>
-                        setEditExpense({ ...editExpense, member: ev.target.value })
+                        setEditExpense({
+                          ...editExpense,
+                          member: ev.target.value,
+                        })
                       }
                     />
                     <input
                       type="text"
                       value={editExpense.category}
                       onChange={(ev) =>
-                        setEditExpense({ ...editExpense, category: ev.target.value })
+                        setEditExpense({
+                          ...editExpense,
+                          category: ev.target.value,
+                        })
                       }
                     />
                     <input
                       type="number"
                       value={editExpense.amount}
                       onChange={(ev) =>
-                        setEditExpense({ ...editExpense, amount: ev.target.value })
+                        setEditExpense({
+                          ...editExpense,
+                          amount: ev.target.value,
+                        })
                       }
                     />
                     <button onClick={handleSaveEdit}>Save</button>
@@ -145,6 +180,12 @@ const Dash = () => {
               </ListItem>
             ))}
           </List>
+
+          {/* Export Buttons */}
+          <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
+            <button onClick={handleExportCSV}>Export CSV</button>
+            <button onClick={handleExportPDF}>Export PDF</button>
+          </div>
         </Card>
 
         {/* Expense Distribution Chart */}
@@ -238,6 +279,21 @@ const Card = styled.div`
     margin: 0.3rem 0;
     color: #444;
   }
+
+  button {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #1565c0;
+    }
+  }
 `;
 
 const List = styled.ul`
@@ -313,21 +369,6 @@ const FormStyled = styled.div`
     &:focus {
       border-color: #1976d2;
       background: #fff;
-    }
-  }
-
-  button {
-    background: #1976d2;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.6rem 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: #1565c0;
     }
   }
 `;
