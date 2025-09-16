@@ -22,7 +22,7 @@ import Analysis from "./pages/Analysis/Analysis";
 // import BusinessExpenseForm from "./pages/Business/BusinessExpense/ExpenseForm";
 // import BusinessIncomeForm from "./pages/Business/BusinessIncomefold/BusinessIncomeForm";
 import BusinessExpense from "./pages/Business/BusinessExpense/BusinessExpense";
-
+import Dash from "./shared/Dashboard";
 // import Personal from "./components/Personal/Personal";
 // import { useGlobalContext } from "./context/globalContext";
 // const Business = () => <div>Welcome to Business Dashboard</div>;
@@ -98,6 +98,7 @@ function App() {
             // <Route path="/" element={<MainHome />} />
             <Route path="/nan" element={<Analysis />} />
             <Route path="/" element={<MainHome />} />
+            <Route path="/teambudget" element={<Dash />} />
           </Routes>
         </AppStyled>
       </BrowserRouter>

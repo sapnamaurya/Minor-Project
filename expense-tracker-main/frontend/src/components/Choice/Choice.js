@@ -7,7 +7,11 @@ const ChoicePage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (choice === "business" || choice === "personal") {
+    if (
+      choice === "business" ||
+      choice === "personal" ||
+      choice === "Team Budget"
+    ) {
       localStorage.setItem("accountType", choice);
       navigate("/register");
     } else {
@@ -37,6 +41,15 @@ const ChoicePage = () => {
               onChange={(e) => setChoice(e.target.value)}
             />
             Personal
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Team Budget"
+              checked={choice === "Team Budget"}
+              onChange={(e) => setChoice(e.target.value)}
+            />
+            Team Budget
           </label>
         </div>
         <button onClick={handleSubmit}>Submit</button>
