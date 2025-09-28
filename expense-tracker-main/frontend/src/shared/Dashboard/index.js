@@ -191,7 +191,7 @@ const Dash = () => {
         {/* Expense Distribution Chart */}
         <Card>
           <h3>Expense Distribution</h3>
-          <PieChart width={350} height={250}>
+          <PieChart width={350} height={264}>
             <Pie
               data={data}
               cx="50%"

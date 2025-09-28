@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { FaBuilding, FaUser, FaUsers } from "react-icons/fa"; // icons
 
 const ChoicePage = () => {
   const [choice, setChoice] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (
-      choice === "business" ||
-      choice === "personal" ||
-      choice === "Team Budget"
-    ) {
+    if (choice) {
       localStorage.setItem("accountType", choice);
       navigate("/register");
     } else {
@@ -21,38 +18,32 @@ const ChoicePage = () => {
 
   return (
     <ChoiceStyled>
-      <div className="choice-box">
+      <div className="container">
         <h2>Select Account Type</h2>
-        <div className="options">
-          <label>
-            <input
-              type="radio"
-              value="business"
-              checked={choice === "business"}
-              onChange={(e) => setChoice(e.target.value)}
-            />
-            Business
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="personal"
-              checked={choice === "personal"}
-              onChange={(e) => setChoice(e.target.value)}
-            />
-            Personal
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Team Budget"
-              checked={choice === "Team Budget"}
-              onChange={(e) => setChoice(e.target.value)}
-            />
-            Team Budget
-          </label>
+        <div className="card-grid">
+          <div
+            className={`card ${choice === "business" ? "selected" : ""}`}
+            onClick={() => setChoice("business")}
+          >
+            <FaBuilding size={50} />
+            <p>Business</p>
+          </div>
+          <div
+            className={`card ${choice === "personal" ? "selected" : ""}`}
+            onClick={() => setChoice("personal")}
+          >
+            <FaUser size={50} />
+            <p>Personal</p>
+          </div>
+          <div
+            className={`card ${choice === "team" ? "selected" : ""}`}
+            onClick={() => setChoice("team")}
+          >
+            <FaUsers size={50} />
+            <p>Team Budget</p>
+          </div>
         </div>
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit}>Continue</button>
       </div>
     </ChoiceStyled>
   );
@@ -60,48 +51,58 @@ const ChoicePage = () => {
 
 const ChoiceStyled = styled.div`
   height: 100vh;
-  width: 100%;
-  background: rgba(252, 246, 249, 0.78);
-  border: 3px solid #ffffff;
-  backdrop-filter: blur(4.5px);
-  border-radius: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #f4f6fb;
 
-  .choice-box {
-    background: rgba(255, 255, 255, 0.3);
-    padding: 3rem;
-    border-radius: 32px;
-    box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
+  .container {
     text-align: center;
 
     h2 {
-      color: #57007b;
+      margin-bottom: 2rem;
+      font-size: 26px;
+      color: #333;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
       margin-bottom: 2rem;
     }
 
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      font-size: 18px;
-      margin-bottom: 2rem;
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
 
-      label {
-        cursor: pointer;
-        color: rgba(34, 34, 96, 0.9);
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
       }
 
-      input {
-        margin-right: 10px;
+      &.selected {
+        border: 2px solid #57007b;
+        background: #f9f0ff;
+      }
+
+      p {
+        margin-top: 1rem;
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
       }
     }
 
     button {
       background: #57007b;
       color: white;
-      padding: 10px 25px;
+      padding: 12px 28px;
       font-size: 18px;
       border: none;
       border-radius: 8px;

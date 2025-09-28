@@ -29,8 +29,8 @@ const Login = () => {
         navigate("/busi");
       } else if (accountType === "personal") {
         navigate("/main");
-      } else if (accountType === "Team Budget") {
-        navigate("/teambudget");
+      } else if (accountType === "team") {
+        navigate("/dd");
       } else {
         navigate("/"); // Fallback
       }
