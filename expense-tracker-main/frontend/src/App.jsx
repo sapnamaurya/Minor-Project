@@ -9,9 +9,8 @@ import Navigation from "./components/Navigation/Navigation";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Income from "./components/Income/Income";
 import Expenses from "./components/Expenses/Expenses";
-import Calendar from "react-calendar";
 import Login from "./components/Login/Login";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./components/Register/Register";
 import { AuthProvider } from "./context/authContext";
 import Choice from "./components/Choice/Choice";
@@ -19,25 +18,16 @@ import MainHome from "./components/Home/Home";
 import BusinessDashboard from "./pages/Business/BusinessDashboard";
 import BusinessIncome from "./pages/Business//BusinessIncomeFold/BusinessIncome";
 import Analysis from "./pages/Analysis/Analysis";
-// import BusinessExpenseForm from "./pages/Business/BusinessExpense/ExpenseForm";
-// import BusinessIncomeForm from "./pages/Business/BusinessIncomefold/BusinessIncomeForm";
 import BusinessExpense from "./pages/Business/BusinessExpense/BusinessExpense";
 import DD from "./sample/index";
-import ReceiptUploader from "./sample/ReciptUploder";
 import CalendarPage from "./shared/CalenderPage";
-import Handle from "./sample/Handle";
-import Summary from "./sample/Summary";
 import TeamExpense from "./shared/TeamExpense";
 import ExpenseTable from "./shared/ExpenseTable";
-// import Personal from "./components/Personal/Personal";
-// import { useGlobalContext } from "./context/globalContext";
-// const Business = () => <div>Welcome to Business Dashboard</div>;
-// const Personal = () => <div>Welcome to Personal Dashboard</div>;
+import Header from "./shared/Header/Heaer";
+import Chart from "./shared/Chart";
+
 function App() {
   const [active, setActive] = useState(1);
-
-  // const global = useGlobalContext();
-  // console.log(global);
 
   const displayData = () => {
     switch (active) {
@@ -75,13 +65,10 @@ function App() {
         return <DD />;
       case 2:
         return <CalendarPage />;
-
       case 3:
         return <ExpenseTable />;
       case 4:
         return <TeamExpense />;
-      case 5:
-        return <Analysis />;
     }
   };
   const orbMemo = useMemo(() => {
@@ -132,7 +119,7 @@ function App() {
               path="/dd"
               element={
                 <MainLayout>
-                  <Navigation active={active} setActive={setActive} />
+                  <Header active={active} setActive={setActive} />
                   <main>{teamDisplay()}</main>
                 </MainLayout>
               }
@@ -145,11 +132,9 @@ function App() {
             <Route path="/nan" element={<Analysis />} />
             <Route path="/" element={<MainHome />} />
             <Route path="/dd" element={<DD />} />
-            <Route path="/receipt" element={<ReceiptUploader />} />
-            <Route path="/handle" element={<Handle />} />
             <Route path="/team" element={<TeamExpense />} />
             <Route path="/table" element={<ExpenseTable />} />
-            <Route path="/summary" element={<Summary />} />
+            <Route path="/chart" element={<Chart />} />
           </Routes>
         </AppStyled>
       </BrowserRouter>

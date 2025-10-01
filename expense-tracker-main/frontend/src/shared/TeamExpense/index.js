@@ -19,12 +19,19 @@ const TeamExpense = () => {
     return Array.isArray(savedExpenses[dateKey]) ? savedExpenses[dateKey] : [];
   });
 
-  const [expenseName, setExpenseName] = useState("");
+  const [purpose, setPurpose] = useState(""); // instead of expenseName
   const [description, setDescription] = useState("");
   const [members, setMembers] = useState([]);
   const [newMember, setNewMember] = useState("");
   const [newAmount, setNewAmount] = useState("");
   const [showInput, setShowInput] = useState(false);
+  const [categoryEditIndex, setCategoryEditIndex] = useState(null);
+
+  // Categories
+  const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
+  const [newCategoryAmount, setNewCategoryAmount] = useState("");
+
   const [filterMember, setFilterMember] = useState("");
   const [editIndex, setEditIndex] = useState(null);
 
@@ -45,6 +52,54 @@ const TeamExpense = () => {
   const handleRemoveMember = (index) => {
     setMembers(members.filter((_, i) => i !== index));
   };
+  const handleAddCategory = () => {
+    if (!newCategory || !newCategoryAmount) {
+      alert("Enter category and amount!");
+      return;
+    }
+
+    const updatedExpenses = [...allExpenses];
+
+    if (categoryEditIndex !== null && editIndex !== null) {
+      // Update existing category
+      updatedExpenses[editIndex].categories[categoryEditIndex] = {
+        category: newCategory,
+        amount: parseFloat(newCategoryAmount),
+      };
+      setCategoryEditIndex(null);
+      setEditIndex(null);
+    } else if (allExpenses.length > 0) {
+      // Add new category to last expense
+      updatedExpenses[allExpenses.length - 1].categories.push({
+        category: newCategory,
+        amount: parseFloat(newCategoryAmount),
+      });
+    } else {
+      alert("Please create an expense first before adding a category!");
+      return;
+    }
+
+    saveToLocalStorage(updatedExpenses);
+    setNewCategory("");
+    setNewCategoryAmount("");
+  };
+
+  const handleEditCategory = (expIndex, catIndex) => {
+    const category = allExpenses[expIndex].categories[catIndex];
+    setNewCategory(category.category);
+    setNewCategoryAmount(category.amount);
+    setEditIndex(expIndex); // reuse editIndex for category
+    // Optionally store category index in state if needed
+    setCategoryEditIndex(catIndex);
+  };
+
+  const handleDeleteCategory = (expIndex, catIndex) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      const updatedExpenses = [...allExpenses];
+      updatedExpenses[expIndex].categories.splice(catIndex, 1);
+      saveToLocalStorage(updatedExpenses);
+    }
+  };
 
   const saveToLocalStorage = (updatedExpenses) => {
     setAllExpenses(updatedExpenses);
@@ -54,38 +109,59 @@ const TeamExpense = () => {
   };
 
   const handleSave = () => {
-    if (!expenseName || !description || members.length === 0) {
-      alert("Fill all fields and add at least one member!");
-      return;
-    }
-
-    const newExpense = {
-      expenseName,
-      description,
-      members,
-    };
-
-    let updatedExpenses;
     if (editIndex !== null) {
-      updatedExpenses = [...allExpenses];
-      updatedExpenses[editIndex] = newExpense;
+      // Existing expense update
+      const updatedExpenses = [...allExpenses];
+      updatedExpenses[editIndex] = {
+        ...updatedExpenses[editIndex],
+        purpose: purpose || updatedExpenses[editIndex].purpose,
+        description: description || updatedExpenses[editIndex].description,
+        members:
+          members.length > 0 ? members : updatedExpenses[editIndex].members,
+        categories:
+          categories.length > 0
+            ? categories
+            : updatedExpenses[editIndex].categories,
+      };
+
+      saveToLocalStorage(updatedExpenses);
       setEditIndex(null);
     } else {
-      updatedExpenses = [...allExpenses, newExpense];
+      // New expense add (validation required)
+      if (!purpose || !description) {
+        alert("Fill purpose and description!");
+        return;
+      }
+
+      if (members.length === 0 && categories.length === 0) {
+        alert("Add at least one Member or one Category!");
+        return;
+      }
+
+      const newExpense = {
+        purpose,
+        description,
+        members,
+        categories,
+      };
+
+      const updatedExpenses = [...allExpenses, newExpense];
+      saveToLocalStorage(updatedExpenses);
     }
 
-    saveToLocalStorage(updatedExpenses);
-
-    setExpenseName("");
+    // Reset only after save/update
+    setPurpose("");
     setDescription("");
     setMembers([]);
+    setCategories([]);
   };
 
   const handleEdit = (index) => {
     const exp = allExpenses[index];
-    setExpenseName(exp.expenseName);
+    setPurpose(exp.purpose);
     setDescription(exp.description);
     setMembers(exp.members);
+    setCategories(exp.categories || []);
     setEditIndex(index);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -113,43 +189,93 @@ const TeamExpense = () => {
       totals[m.name] = (totals[m.name] || 0) + m.amount;
     });
   });
+  // CSV Export with two tables
+  // CSV Export with Member Contributions and Category Expenses
+  // const handleExportAllCSV = () => {
+  //   // Member Contributions
+  //   const memberData = allExpenses.flatMap((exp) =>
+  //     exp.members.map((m) => ({
+  //       Type: "Member",
+  //       Purpose: exp.purpose,
+  //       Description: exp.description,
+  //       Name: m.name,
+  //       Amount: m.amount,
+  //     }))
+  //   );
 
-  // CSV Export
-  const handleExportCSV = () => {
-    const dataToExport = filteredExpenses.flatMap((exp) =>
-      exp.members.map((m) => ({
-        "Expense Name": exp.expenseName,
-        Description: exp.description,
-        Member: m.name,
-        Amount: m.amount,
-      }))
-    );
-    const csv = Papa.unparse(dataToExport);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `expenses-${dateKey}.csv`);
-  };
+  //   // Add an empty row as separator (optional)
+  //   const separator = [
+  //     { Type: "", Purpose: "", Description: "", Name: "", Amount: "" },
+  //   ];
 
-  // PDF Export
-  const handleExportPDF = () => {
-    const doc = new jsPDF();
-    doc.text(`Expense Report - ${dateKey}`, 14, 10);
+  //   // Category Expenses
+  //   const categoryData = allExpenses.flatMap((exp) =>
+  //     exp.categories.map((c) => ({
+  //       Type: "Category",
+  //       Purpose: exp.purpose,
+  //       Description: "",
+  //       Name: c.category,
+  //       Amount: c.amount,
+  //     }))
+  //   );
 
-    const bodyData = filteredExpenses.flatMap((exp) =>
-      exp.members.map((m) => [m.name, exp.expenseName, m.amount])
-    );
+  //   const combinedData = [...memberData, ...separator, ...categoryData];
 
-    autoTable(doc, {
-      startY: 20,
-      head: [["Member", "Category", "Amount"]],
-      body: bodyData,
-    });
+  //   const csv = Papa.unparse(combinedData);
+  //   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  //   saveAs(blob, `expenses-${dateKey}.csv`);
+  // };
 
-    doc.save(`expenses-${dateKey}.pdf`);
-  };
+  // // PDF Export with two tables
+  // const handleExportAllPDF = () => {
+  //   const doc = new jsPDF();
+  //   doc.setFontSize(16);
+  //   doc.text(`Expenses Report - ${dateKey}`, 14, 10);
+
+  //   // Member Contributions Table
+  //   const memberData = allExpenses.flatMap((exp) =>
+  //     exp.members.map((m) => [
+  //       exp.purpose,
+  //       exp.description,
+  //       m.name,
+  //       `$${m.amount}`,
+  //     ])
+  //   );
+
+  //   if (memberData.length > 0) {
+  //     doc.setFontSize(14);
+  //     doc.text("👥 Member Contributions", 14, 20);
+  //     autoTable(doc, {
+  //       startY: 25,
+  //       head: [["Purpose", "Description", "Member", "Amount"]],
+  //       body: memberData,
+  //     });
+  //   }
+
+  //   // Determine Y position after member table
+  //   let finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 25;
+
+  //   // Category Expenses Table
+  //   const categoryData = allExpenses.flatMap((exp) =>
+  //     exp.categories.map((c) => [exp.purpose, c.category, `$${c.amount}`])
+  //   );
+
+  //   if (categoryData.length > 0) {
+  //     doc.setFontSize(14);
+  //     doc.text("📂 Category Expenses", 14, finalY);
+  //     autoTable(doc, {
+  //       startY: finalY + 5,
+  //       head: [["Purpose", "Category", "Amount"]],
+  //       body: categoryData,
+  //     });
+  //   }
+
+  //   doc.save(`expenses-${dateKey}.pdf`);
+  // };
 
   return (
     <div style={styles.container}>
-      <button onClick={() => navigate("/home")} style={styles.backBtn}>
+      <button onClick={() => navigate("/dd")} style={styles.backBtn}>
         ⬅ Back
       </button>
 
@@ -161,12 +287,12 @@ const TeamExpense = () => {
           </h2>
 
           <div style={styles.inputGroup}>
-            <label style={styles.label}>Expense Name:</label>
+            <label style={styles.label}>Purpose:</label>
             <input
               type="text"
-              value={expenseName}
-              onChange={(e) => setExpenseName(e.target.value)}
-              placeholder="Enter expense name"
+              value={purpose}
+              onChange={(e) => setPurpose(e.target.value)}
+              placeholder="e.g., Manali Trip, Office Party"
               style={styles.input}
             />
           </div>
@@ -181,6 +307,7 @@ const TeamExpense = () => {
             />
           </div>
 
+          {/* Members */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Members & Amount:</label>
             <div style={styles.chipContainer}>
@@ -224,6 +351,37 @@ const TeamExpense = () => {
             )}
           </div>
 
+          {/* Categories */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Categories:</label>
+            <div style={styles.chipContainer}>
+              {categories.map((c, i) => (
+                <div key={i} style={styles.chip}>
+                  {c.category} (${c.amount})
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+              <input
+                type="text"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                placeholder="Category name (e.g., Travel, Food)"
+                style={styles.input}
+              />
+              <input
+                type="number"
+                value={newCategoryAmount}
+                onChange={(e) => setNewCategoryAmount(e.target.value)}
+                placeholder="Amount"
+                style={styles.input}
+              />
+              <button onClick={handleAddCategory} style={styles.btn}>
+                Add Category
+              </button>
+            </div>
+          </div>
+
           <button onClick={handleSave} style={styles.saveBtn}>
             💾 {editIndex !== null ? "Update Expense" : "Save Expense"}
           </button>
@@ -242,10 +400,12 @@ const TeamExpense = () => {
               style={styles.input}
             />
 
+            {/* Member Expenses Table */}
+            <h4>👥 Member Contributions</h4>
             <table style={styles.table}>
               <thead>
                 <tr>
-                  <th style={styles.th}>Expense Name</th>
+                  <th style={styles.th}>Purpose</th>
                   <th style={styles.th}>Description</th>
                   <th style={styles.th}>Member</th>
                   <th style={styles.th}>Amount</th>
@@ -256,7 +416,7 @@ const TeamExpense = () => {
                 {filteredExpenses.map((exp, i) =>
                   exp.members.map((m, j) => (
                     <tr key={`${i}-${j}`}>
-                      <td style={styles.td}>{exp.expenseName}</td>
+                      <td style={styles.td}>{exp.purpose}</td>
                       <td style={styles.td}>{exp.description}</td>
                       <td style={styles.td}>{m.name}</td>
                       <td style={styles.td}>${m.amount}</td>
@@ -280,8 +440,57 @@ const TeamExpense = () => {
               </tbody>
             </table>
 
-            <div style={{ marginTop: "20px" }}>
-              <h4>Total by Member:</h4>
+            {/* Category Expenses Table */}
+            {/* Category Expenses Table */}
+            <h4 style={{ marginTop: "30px" }}>📂 Category Expenses</h4>
+            <table style={styles.table}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Purpose</th>
+                  <th style={styles.th}>Category</th>
+                  <th style={styles.th}>Amount</th>
+                  <th style={styles.th}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allExpenses.map((exp, expIndex) =>
+                  exp.categories?.map((c, catIndex) => (
+                    <tr key={`${expIndex}-${catIndex}`}>
+                      <td style={styles.td}>{exp.purpose}</td>
+                      <td style={styles.td}>{c.category}</td>
+                      <td style={styles.td}>${c.amount}</td>
+                      <td style={styles.td}>
+                        <button
+                          onClick={() => handleEditCategory(expIndex, catIndex)}
+                          style={styles.actionBtn}
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeleteCategory(expIndex, catIndex)
+                          }
+                          style={styles.actionBtn}
+                        >
+                          🗑️
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+
+            {/* Totals */}
+
+            <div
+              style={{
+                marginTop: "20px",
+                lineHeight: "22px",
+                fontSize: "14px",
+              }}
+            >
+              <h4>📊 Totals</h4>
               <ul>
                 {Object.entries(totals).map(([member, total]) => (
                   <li key={member}>
@@ -289,27 +498,44 @@ const TeamExpense = () => {
                   </li>
                 ))}
               </ul>
+
+              <p>
+                <strong>Total Member Contributions:</strong> $
+                {filteredExpenses.reduce(
+                  (s, e) => s + e.members.reduce((sum, m) => sum + m.amount, 0),
+                  0
+                )}
+              </p>
+
+              <p>
+                <strong>Total Expense (Net):</strong> $
+                {filteredExpenses.reduce(
+                  (s, e) => s + e.members.reduce((sum, m) => sum + m.amount, 0),
+                  0
+                ) -
+                  allExpenses.reduce(
+                    (s, e) =>
+                      s + e.categories.reduce((sum, c) => sum + c.amount, 0),
+                    0
+                  )}
+              </p>
             </div>
 
             {/* Export Buttons */}
-            <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-              <button onClick={handleExportCSV} style={styles.btn}>
-                📄 Export CSV
+            {/* <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
+              <button onClick={handleExportAllCSV} style={styles.btn}>
+                📄 Export All CSV
               </button>
-              <button onClick={handleExportPDF} style={styles.btn}>
-                📝 Export PDF
+              <button onClick={handleExportAllPDF} style={styles.btn}>
+                📝 Export All PDF
               </button>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
     </div>
   );
 };
-
-// ...styles object remains the same
-
-// ...styles object remains same
 
 export default TeamExpense;
 
@@ -405,7 +631,12 @@ const styles = {
     textAlign: "left",
     marginTop: "15px",
   },
-  th: { background: "#0d6efd", color: "white", padding: "12px" },
-  td: { borderBottom: "1px solid #dee2e6", padding: "10px" },
+  th: {
+    fontSize: "14px",
+    background: "#0d6efd",
+    color: "white",
+    padding: "12px",
+  },
+  td: { fontSize: "13px", borderBottom: "1px solid #dee2e6", padding: "10px" },
   actionBtn: { marginRight: "5px", padding: "4px 8px", cursor: "pointer" },
 };
