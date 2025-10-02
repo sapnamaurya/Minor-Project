@@ -9,13 +9,13 @@ export const teamItems = [
   },
   {
     id: 2,
-    title: "select Date",
+    title: "Planner",
     icon: calender,
     link: "/dashboard",
   },
   {
     id: 3,
-    title: "Saved Data",
+    title: "Reports",
     icon: trend,
     link: "/dashboard",
   },
