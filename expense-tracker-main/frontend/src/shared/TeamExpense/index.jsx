@@ -352,6 +352,7 @@ const TeamExpense = () => {
           </div>
 
           {/* Categories */}
+          {/* Categories */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Categories:</label>
             <div style={styles.chipContainer}>
@@ -361,14 +362,40 @@ const TeamExpense = () => {
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-              <input
-                type="text"
+
+            <div
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+              }}
+            >
+              {/* Dropdown for categories */}
+              <select
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-                placeholder="Category name (e.g., Travel, Food)"
                 style={styles.input}
-              />
+              >
+                <option value="">-- Select Category --</option>
+                <option value="Travel">Travel</option>
+                <option value="Food">Food</option>
+                <option value="Accommodation">Accommodation</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+
+              {/* Show text input only if "Other" is selected */}
+              {newCategory === "Other" && (
+                <input
+                  type="text"
+                  placeholder="Enter custom category"
+                  onChange={(e) => setNewCategory(e.target.value)}
+                  style={styles.input}
+                />
+              )}
+
               <input
                 type="number"
                 value={newCategoryAmount}
@@ -376,6 +403,7 @@ const TeamExpense = () => {
                 placeholder="Amount"
                 style={styles.input}
               />
+
               <button onClick={handleAddCategory} style={styles.btn}>
                 Add Category
               </button>
@@ -542,11 +570,8 @@ export default TeamExpense;
 const styles = {
   container: {
     margin: "40px",
-    height: "100vh",
-    overflow: "hidden",
     fontFamily: "Arial, sans-serif",
-    minHeight: "100vh",
-    padding: "20px",
+    padding: "20px  ",
   },
   backBtn: {
     padding: "8px 14px",

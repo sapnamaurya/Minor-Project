@@ -210,8 +210,7 @@ const ExpenseTable = () => {
       style={{
         padding: "30px 110px",
         fontFamily: "'Segoe UI', Arial, sans-serif", // ✅ Consistent font
-        height: "100vh",
-        overflowY: "scroll",
+     
       }}
     >
       <button
