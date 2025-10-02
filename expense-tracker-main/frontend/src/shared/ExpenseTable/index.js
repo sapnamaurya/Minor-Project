@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { saveAs } from "file-saver";
 import Papa from "papaparse";
@@ -37,6 +37,10 @@ const ExpenseTable = () => {
   const dateKey = selectedDate.toDateString();
 
   const [expenses, setExpenses] = useState([]);
+
+  // Chart refs
+  const barRef = useRef(null);
+  const pieRef = useRef(null);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("expenses")) || {};
@@ -169,15 +173,43 @@ const ExpenseTable = () => {
         head: [["Purpose", "Category", "Amount"]],
         body: categoryData,
       });
+      finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : finalY + 40;
+    }
+
+    // ✅ Add Charts as Images
+    const barChart = barRef.current;
+    const pieChart = pieRef.current;
+
+    if (barChart) {
+      const barImg = barChart.toBase64Image();
+      doc.addPage();
+      doc.setFontSize(14);
+      doc.text("👥 Member Contributions (Bar Chart)", 14, 20);
+      doc.addImage(barImg, "PNG", 15, 30, 180, 100);
+    }
+
+    if (pieChart) {
+      const pieImg = pieChart.toBase64Image();
+      doc.addPage();
+      doc.setFontSize(14);
+      doc.text("📊 Category Breakdown (Pie Chart)", 14, 20);
+      doc.addImage(pieImg, "PNG", 15, 30, 180, 100);
     }
 
     doc.save(`expenses-${dateKey}.pdf`);
   };
 
   return (
-    <div style={{ padding: "30px", fontFamily: "Arial, sans-serif" }}>
+    <div
+      style={{
+        padding: " 30px 110px",
+        fontFamily: "Arial, sans-serif",
+        height: "100vh",
+        overflow: "scroll",
+      }}
+    >
       <button
-        onClick={() => navigate("/dd")}
+        onClick={() => navigate("/dash")}
         style={{
           marginBottom: "20px",
           padding: "8px 14px",
@@ -195,85 +227,111 @@ const ExpenseTable = () => {
       ) : (
         <>
           {/* Tables */}
-          <div style={{ marginTop: "20px" }}>
-            <h3>👥 Member Contributions</h3>
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                marginTop: "10px",
-              }}
-            >
-              <thead>
-                <tr style={{ background: "#0d6efd", color: "white" }}>
-                  <th>Purpose</th>
-                  <th>Description</th>
-                  <th>Member</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {expenses.map((exp, i) =>
-                  exp.members?.map((m, j) => (
-                    <tr key={`${i}-${j}`} style={{ fontSize: "16px" }}>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {exp.purpose}
-                      </td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {exp.description}
-                      </td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {m.name}
-                      </td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        ${m.amount}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-
-            <h3 style={{ marginTop: "30px" }}>📂 Category Expenses</h3>
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                marginTop: "10px",
-              }}
-            >
-              <thead>
-                <tr style={{ background: "#0d6efd", color: "white" }}>
-                  <th>Purpose</th>
-                  <th>Category</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {expenses.map((exp, i) =>
-                  exp.categories?.map((c, j) => (
-                    <tr key={`${i}-${j}`} style={{ fontSize: "16px" }}>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {exp.purpose}
-                      </td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {c.category}
-                      </td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        ${c.amount}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+          <div
+            style={{
+              marginTop: "20px",
+              gap: "121px",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              marginBottom: " 42px",
+            }}
+          >
+            <div>
+              <h3 style={{ marginBottom: "25px" }}>👥 Member Contributions</h3>
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  marginTop: "10px",
+                }}
+              >
+                <thead>
+                  <tr style={{ background: "#0d6efd", color: "white" }}>
+                    <th>Purpose</th>
+                    <th>Description</th>
+                    <th>Member</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {expenses.map((exp, i) =>
+                    exp.members?.map((m, j) => (
+                      <tr key={`${i}-${j}`} style={{ fontSize: "16px" }}>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          {exp.purpose}
+                        </td>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          {exp.description}
+                        </td>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          {m.name}
+                        </td>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          ${m.amount}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <h3 style={{ marginBottom: "25px" }}> Category Expenses</h3>
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  marginTop: "10px",
+                }}
+              >
+                <thead>
+                  <tr style={{ background: "#0d6efd", color: "white" }}>
+                    <th>Purpose</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {expenses.map((exp, i) =>
+                    exp.categories?.map((c, j) => (
+                      <tr key={`${i}-${j}`} style={{ fontSize: "16px" }}>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          {exp.purpose}
+                        </td>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          {c.category}
+                        </td>
+                        <td
+                          style={{ border: "1px solid #ddd", padding: "8px" }}
+                        >
+                          ${c.amount}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-          {/* {chart} */}
+
+          {/* Charts */}
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
-              gap: "20px",
+              gap: "60px",
               marginTop: "20px",
             }}
           >
@@ -294,10 +352,11 @@ const ExpenseTable = () => {
               </h4>
               <div style={{ flexGrow: 1 }}>
                 <Bar
+                  ref={barRef}
                   data={memberChartData}
                   options={{
                     responsive: true,
-                    maintainAspectRatio: false, // fill parent height
+                    maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
                       y: { beginAtZero: true, ticks: { stepSize: 50 } },
@@ -324,10 +383,11 @@ const ExpenseTable = () => {
               </h4>
               <div style={{ flexGrow: 1 }}>
                 <Pie
+                  ref={pieRef}
                   data={categoryChartData}
                   options={{
                     responsive: true,
-                    maintainAspectRatio: false, // respects fixed card height
+                    maintainAspectRatio: false,
                     plugins: {
                       legend: { position: "bottom" },
                     },

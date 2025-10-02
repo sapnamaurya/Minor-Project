@@ -25,6 +25,7 @@ import TeamExpense from "./shared/TeamExpense";
 import ExpenseTable from "./shared/ExpenseTable";
 import Header from "./shared/Header/Heaer";
 import Chart from "./shared/Chart";
+import Dash from "./shared/Dashboard";
 
 function App() {
   const [active, setActive] = useState(1);
@@ -62,7 +63,7 @@ function App() {
   const teamDisplay = () => {
     switch (active) {
       case 1:
-        return <DD />;
+        return <Dash />;
       case 2:
         return <CalendarPage />;
       case 3:
@@ -116,7 +117,7 @@ function App() {
               }
             />
             <Route
-              path="/dd"
+              path="/dash"
               element={
                 <MainLayout>
                   <Header active={active} setActive={setActive} />
@@ -124,6 +125,7 @@ function App() {
                 </MainLayout>
               }
             />
+            <Route path="/dash" element={<Dash />} />
             <Route path="/home" element={<CalendarPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

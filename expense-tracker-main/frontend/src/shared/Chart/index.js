@@ -89,7 +89,7 @@ const Chart = () => {
   return (
     <div style={{ padding: "30px" }}>
       <button
-        onClick={() => navigate("/dd")}
+        onClick={() => navigate("/dash")}
         style={{
           marginBottom: "20px",
           padding: "8px 14px",

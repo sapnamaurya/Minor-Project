@@ -275,7 +275,7 @@ const TeamExpense = () => {
 
   return (
     <div style={styles.container}>
-      <button onClick={() => navigate("/dd")} style={styles.backBtn}>
+      <button onClick={() => navigate("/dash")} style={styles.backBtn}>
         ⬅ Back
       </button>
 
@@ -542,6 +542,8 @@ export default TeamExpense;
 const styles = {
   container: {
     margin: "40px",
+    height: "100vh",
+    overflow: "hidden",
     fontFamily: "Arial, sans-serif",
     minHeight: "100vh",
     padding: "20px",
