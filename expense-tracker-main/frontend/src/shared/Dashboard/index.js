@@ -557,11 +557,13 @@ const Dash = () => {
   };
 
   // PDF Export
+
   const handleExportPDF = () => {
     const doc = new jsPDF();
     const monthName = selectedMonth.toLocaleString("default", {
       month: "long",
     });
+    doc.setFont("helvetica", "normal"); // ✅ safe font
     const title = `Expenses Report - ${monthName} ${selectedMonth.getFullYear()}`;
     doc.setFontSize(16);
     doc.text(title, 14, 10);
@@ -580,7 +582,7 @@ const Dash = () => {
 
     if (memberData.length > 0) {
       doc.setFontSize(14);
-      doc.text("👥 Member Contributions", 14, 20);
+      doc.text("Member Contributions", 14, 20); // ❌ removed emoji
       autoTable(doc, {
         startY: 25,
         head: [["Date", "Purpose", "Description", "Member", "Amount"]],
@@ -603,7 +605,7 @@ const Dash = () => {
 
     if (categoryData.length > 0) {
       doc.setFontSize(14);
-      doc.text("📂 Category Expenses", 14, finalY);
+      doc.text("Category Expenses", 14, finalY); // ❌ removed emoji
       autoTable(doc, {
         startY: finalY + 5,
         head: [["Date", "Purpose", "Category", "Amount"]],
@@ -612,7 +614,7 @@ const Dash = () => {
       finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : finalY + 40;
     }
 
-    // Charts on the same page
+    // Charts page
     if (barRef.current && pieRef.current) {
       const barCanvas = barRef.current.canvas;
       const pieCanvas = pieRef.current.canvas;
@@ -622,10 +624,10 @@ const Dash = () => {
 
       doc.addPage();
       doc.setFontSize(14);
-      doc.text("👥 Member Contributions (Bar Chart)", 14, 20);
-      doc.text("📊 Category Breakdown (Pie Chart)", 110, 20);
+      doc.text("Member Contributions (Bar Chart)", 14, 20); // ❌ removed emoji
+      doc.text("Category Breakdown (Pie Chart)", 110, 20); // ❌ removed emoji
 
-      // side by side
+      // side by side charts
       doc.addImage(barImg, "PNG", 15, 30, 90, 90);
       doc.addImage(pieImg, "PNG", 110, 30, 90, 90);
     }

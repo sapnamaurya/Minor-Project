@@ -17,6 +17,9 @@ import {
 } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
 
+// Icons
+import { RiTeamFill } from "react-icons/ri";
+
 ChartJs.register(
   CategoryScale,
   LinearScale,
@@ -132,6 +135,9 @@ const ExpenseTable = () => {
   // PDF Export
   const handleExportAllPDF = () => {
     const doc = new jsPDF();
+
+    // ✅ Set clean font
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
     doc.text(`Expenses Report - ${dateKey}`, 14, 10);
 
@@ -148,7 +154,7 @@ const ExpenseTable = () => {
 
     if (memberData.length > 0) {
       doc.setFontSize(14);
-      doc.text("👥 Member Contributions", 14, 20);
+      doc.text("Member Contributions", 14, 20); // ✅ Removed emoji
       autoTable(doc, {
         startY: 25,
         head: [["Purpose", "Description", "Member", "Amount"]],
@@ -167,7 +173,7 @@ const ExpenseTable = () => {
 
     if (categoryData.length > 0) {
       doc.setFontSize(14);
-      doc.text("📂 Category Expenses", 14, finalY);
+      doc.text("Category Expenses", 14, finalY); // ✅ Removed emoji
       autoTable(doc, {
         startY: finalY + 5,
         head: [["Purpose", "Category", "Amount"]],
@@ -184,7 +190,7 @@ const ExpenseTable = () => {
       const barImg = barChart.toBase64Image();
       doc.addPage();
       doc.setFontSize(14);
-      doc.text("👥 Member Contributions (Bar Chart)", 14, 20);
+      doc.text("Member Contributions (Bar Chart)", 14, 20);
       doc.addImage(barImg, "PNG", 15, 30, 180, 100);
     }
 
@@ -192,7 +198,7 @@ const ExpenseTable = () => {
       const pieImg = pieChart.toBase64Image();
       doc.addPage();
       doc.setFontSize(14);
-      doc.text("📊 Category Breakdown (Pie Chart)", 14, 20);
+      doc.text("Category Breakdown (Pie Chart)", 14, 20);
       doc.addImage(pieImg, "PNG", 15, 30, 180, 100);
     }
 
@@ -202,8 +208,8 @@ const ExpenseTable = () => {
   return (
     <div
       style={{
-        padding: " 30px 110px",
-        fontFamily: "Arial, sans-serif",
+        padding: "30px 110px",
+        fontFamily: "'Segoe UI', Arial, sans-serif", // ✅ Consistent font
         height: "100vh",
         overflow: "scroll",
       }}
@@ -233,11 +239,13 @@ const ExpenseTable = () => {
               gap: "121px",
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
-              marginBottom: " 42px",
+              marginBottom: "42px",
             }}
           >
             <div>
-              <h3 style={{ marginBottom: "25px" }}>👥 Member Contributions</h3>
+              <h3 style={{ marginBottom: "25px" }}>
+                <RiTeamFill /> Member Contributions
+              </h3>
               <table
                 style={{
                   width: "100%",
@@ -283,8 +291,9 @@ const ExpenseTable = () => {
                 </tbody>
               </table>
             </div>
+
             <div>
-              <h3 style={{ marginBottom: "25px" }}> Category Expenses</h3>
+              <h3 style={{ marginBottom: "25px" }}>Category Expenses</h3>
               <table
                 style={{
                   width: "100%",
@@ -335,7 +344,7 @@ const ExpenseTable = () => {
               marginTop: "20px",
             }}
           >
-            {/* 👥 Member Contributions (Bar Chart) */}
+            {/* Member Contributions (Bar Chart) */}
             <div
               style={{
                 background: "white",
@@ -348,7 +357,7 @@ const ExpenseTable = () => {
               }}
             >
               <h4 style={{ textAlign: "center", marginBottom: "15px" }}>
-                👥 Member Contributions
+                <RiTeamFill /> Member Contributions
               </h4>
               <div style={{ flexGrow: 1 }}>
                 <Bar
@@ -366,7 +375,7 @@ const ExpenseTable = () => {
               </div>
             </div>
 
-            {/* 📊 Category Breakdown (Pie Chart) */}
+            {/* Category Breakdown (Pie Chart) */}
             <div
               style={{
                 background: "white",
