@@ -211,7 +211,7 @@ const ExpenseTable = () => {
         padding: "30px 110px",
         fontFamily: "'Segoe UI', Arial, sans-serif", // ✅ Consistent font
         height: "100vh",
-        overflow: "scroll",
+        overflowY: "scroll",
       }}
     >
       <button
